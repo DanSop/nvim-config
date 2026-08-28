@@ -194,8 +194,14 @@ do
     underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
     -- Can switch between these as you prefer
-    virtual_text = true, -- Text shows up at the end of the line
+    -- Inline text only on the line the cursor is on (clangd's messages are long and
+    -- would otherwise paper every line); the rest show as signs in the gutter,
+    -- <leader>e opens the full message under the cursor, <leader>q lists them all.
+    virtual_text = { current_line = true, spacing = 2, prefix = '>', severity = { min = vim.diagnostic.severity.WARN } }, -- Text shows up at the end of the line
     virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+    -- Info and hint level (clangd's "no header directly provides X" by the hundred)
+    -- are kept out of the gutter and the list too; the float under the cursor still shows them.
+    signs = { severity = { min = vim.diagnostic.severity.WARN } },
 
     -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
     jump = {
@@ -209,7 +215,18 @@ do
     },
   }
 
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+  vim.keymap.set(
+    'n',
+    '<leader>q',
+    function() vim.diagnostic.setloclist { severity = { min = vim.diagnostic.severity.WARN } } end,
+    { desc = 'Open diagnostic [Q]uickfix list' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>e',
+    function() vim.diagnostic.open_float { scope = 'cursor', focus = false } end,
+    { desc = 'Show diagnostic [E]rror under cursor' }
+  )
 
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
   -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -692,7 +709,24 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
+    -- C: reads compile_commands.json (CMake writes it with CMAKE_EXPORT_COMPILE_COMMANDS)
+    -- and a .clangd file at the project root. Diagnostics are kept short on the
+    -- clangd side too: no clang-tidy, no header insertion, no completion noise.
+    clangd = {
+      cmd = {
+        'clangd',
+        '--background-index',
+        '--clang-tidy=false',
+        '--header-insertion=never',
+        -- Ask the compiler named in compile_commands.json for its system include
+        -- dirs: this clangd is an MSVC build and the projects are built with mingw gcc.
+        '--query-driver=**/gcc.exe,**/gcc,**/cc,**/clang.exe,**/clang',
+        '--completion-style=detailed',
+        '--function-arg-placeholders=false',
+        '--log=error',
+      },
+      init_options = { clangdFileStatus = false },
+    },
     -- gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
@@ -906,6 +940,16 @@ do
   -- NOTE: You can also specify a branch or a specific commit
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
+  -- The tree-sitter CLI compiles parsers with cl.exe on Windows by default, and
+  -- with mingw gcc its ld refuses the extended-length output path the CLI
+  -- passes, so bin/tscc.cmd stands in: it strips that prefix and calls gcc. The
+  -- CLI's cc crate reads the target-specific CC_<triple> before CC, so only it
+  -- sees the shim and cmake in :terminal does not.
+  if vim.fn.has 'win32' == 1 and vim.fn.executable 'cl' == 0 and vim.fn.executable 'gcc' == 1 then
+    local tscc = vim.fs.joinpath(vim.fn.stdpath 'config', 'bin', 'tscc.cmd'):gsub('/', '\\')
+    vim.env.CC_x86_64_pc_windows_msvc = vim.env.CC_x86_64_pc_windows_msvc or tscc
+  end
+
   -- Ensure basic parsers are installed
   local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
   require('nvim-treesitter').install(parsers)
@@ -979,7 +1023,7 @@ do
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- require 'custom.plugins'
+  require 'custom.plugins'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
