@@ -11,9 +11,7 @@ call scoop install git neovim ripgrep fd tree-sitter gcc make win32yank
 call scoop update neovim
 
 if not exist "%CFG%\.git" (
-  if exist "%CFG%" (
-    for /f %%t in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMddHHmmss"') do move "%CFG%" "%CFG%.bak-%%t"
-  )
+  if exist "%CFG%" rmdir /s /q "%CFG%"
   git clone "%REPO%" "%CFG%"
 )
 
@@ -54,9 +52,7 @@ if ! command -v tree-sitter >/dev/null 2>&1; then
 fi
 
 if [ ! -d "$cfg/.git" ]; then
-  if [ -e "$cfg" ]; then
-    mv "$cfg" "$cfg.bak-$(date +%Y%m%d%H%M%S)"
-  fi
+  rm -rf "$cfg"
   git clone "$repo" "$cfg"
 fi
 
