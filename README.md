@@ -1,8 +1,10 @@
 # nvim-config
 
-Windows: `curl.exe -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat; ./install.bat`
+Windows: `git clone https://github.com/DanSop/nvim-config.git $env:LOCALAPPDATA
+vim; & $env:LOCALAPPDATA
+vim\install.bat`
 
-Linux: `curl -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat; sh install.bat`
+Linux: `git clone https://github.com/DanSop/nvim-config.git ~/.config/nvim; sh ~/.config/nvim/install.bat`
 
 Installs
 
