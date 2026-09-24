@@ -2,20 +2,21 @@
 
 ## Quick install
 
-Windows:
+One file works on both. Windows (PowerShell):
 
-```cmd
-curl.exe -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat
-.\install.bat
+```powershell
+curl.exe -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat; ./install.bat
 ```
 
 Linux:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/DanSop/nvim-config/master/install.sh | sh
+curl -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat; sh install.bat
 ```
 
-Both install Neovim 0.12+, git, gcc, make, ripgrep, fd and the tree-sitter CLI, clone this repo into the Neovim config directory (backing up any existing one), and run Neovim once headless so `vim.pack` installs every plugin and parser.
+From a clone, `./install.bat` works in PowerShell and Linux, `.\install.bat` in cmd.
+
+It installs Neovim 0.12+, git, gcc, make, ripgrep, fd and the tree-sitter CLI, clone this repo into the Neovim config directory (backing up any existing one), and run Neovim once headless so `vim.pack` installs every plugin and parser.
 
 | Key | Action |
 | :- | :- |
