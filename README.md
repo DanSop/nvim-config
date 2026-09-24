@@ -1,8 +1,6 @@
 # nvim-config
 
-Windows: `git clone https://github.com/DanSop/nvim-config.git $env:LOCALAPPDATA
-vim; & $env:LOCALAPPDATA
-vim\install.bat`
+Windows: `git clone https://github.com/DanSop/nvim-config.git $env:LOCALAPPDATA/nvim; & $env:LOCALAPPDATA/nvim/install.bat`
 
 Linux: `git clone https://github.com/DanSop/nvim-config.git ~/.config/nvim; sh ~/.config/nvim/install.bat`
 
