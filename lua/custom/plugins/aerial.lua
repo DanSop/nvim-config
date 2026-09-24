@@ -17,6 +17,11 @@ require('aerial').setup {
   show_guides = true,
   highlight_on_hover = true,
   autojump = false,
+  nav = {
+    keymaps = {
+      ['<Esc>'] = 'actions.close',
+    },
+  },
   -- Keep the outline readable in big C files: declarations, not every local.
   filter_kind = {
     'Class',
