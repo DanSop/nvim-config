@@ -5,7 +5,7 @@
 Windows:
 
 ```cmd
-curl -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat
+curl.exe -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat
 .\install.bat
 ```
 
