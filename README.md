@@ -1,4 +1,28 @@
-# kickstart.nvim
+# nvim-config
+
+## Quick install
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/DanSop/nvim-config/master/install.ps1 | iex
+```
+
+Linux:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/DanSop/nvim-config/master/install.sh | sh
+```
+
+Both install Neovim 0.12+, git, gcc, make, ripgrep, fd and the tree-sitter CLI, clone this repo into the Neovim config directory (backing up any existing one), and run Neovim once headless so `vim.pack` installs every plugin and parser.
+
+| Key | Action |
+| :- | :- |
+| `<leader>n` | Toggle neo-tree file tree |
+| `\` | Reveal current file in neo-tree |
+| `<leader>a` | Toggle aerial symbol outline |
+| `<leader>o` | Toggle aerial nav popup |
+| `{` / `}` | Previous / next symbol |
 
 ## Introduction
 

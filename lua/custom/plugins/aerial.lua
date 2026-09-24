@@ -35,3 +35,4 @@ require('aerial').setup {
 }
 
 vim.keymap.set('n', '<leader>a', '<Cmd>AerialToggle!<CR>', { desc = 'Toggle symbol outline [A]erial', silent = true })
+vim.keymap.set('n', '<leader>o', '<Cmd>AerialNavToggle<CR>', { desc = 'Toggle Aerial nav p[O]pup', silent = true })
