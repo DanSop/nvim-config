@@ -2,10 +2,11 @@
 
 ## Quick install
 
-Windows (PowerShell):
+Windows:
 
-```powershell
-irm https://raw.githubusercontent.com/DanSop/nvim-config/master/install.ps1 | iex
+```cmd
+curl -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat
+.\install.bat
 ```
 
 Linux:
