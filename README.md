@@ -16,7 +16,7 @@ curl -LO https://raw.githubusercontent.com/DanSop/nvim-config/master/install.bat
 
 From a clone, `./install.bat` works in PowerShell and Linux, `.\install.bat` in cmd.
 
-It installs Neovim 0.12+, git, gcc, make, ripgrep, fd and the tree-sitter CLI, clone this repo into the Neovim config directory (backing up any existing one), and run Neovim once headless so `vim.pack` installs every plugin and parser.
+It installs Neovim 0.12+, git, gcc, make, ripgrep, fd and the tree-sitter CLI, clones this repo into the Neovim config directory (backing up any existing one), and runs Neovim once headless so `vim.pack` installs every plugin and parser.
 
 | Key | Action |
 | :- | :- |
